@@ -14,7 +14,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "aspire-datatable": [
+        "dist/aspire-datatable/aspire-datatable",
+        "dist/aspire-datatable"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
