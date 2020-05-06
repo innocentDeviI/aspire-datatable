@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-import 'datatables.net';
+import { records } from '../../helper/table-record';
 
 @Component({
   selector: 'app-datatable-basic',
@@ -8,31 +7,24 @@ import 'datatables.net';
   styleUrls: ['./datatable-basic.component.scss']
 })
 export class DatatableBasicComponent implements OnInit {
-  public tableWidget: any;
-
+  headers: any[] = [];
+  data: any[] = [];
   constructor() { }
 
   ngOnInit(): void {
+    this.initSampleData();
   }
 
-    // tslint:disable-next-line:use-lifecycle-interface
-    ngAfterViewInit() {
-      this.initDatatable();
-    }
-
-    private initDatatable(): void {
-      const exampleId: any = $('#example');
-      this.tableWidget = exampleId.DataTable({
-        select: true
-      });
-    }
-
-    private reInitDatatable(): void {
-     if (this.tableWidget) {
-       this.tableWidget.destroy();
-       this.tableWidget = null;
-     }
-     setTimeout(() => this.initDatatable(), 0);
-   }
-
+  initSampleData = () => {
+    this.headers = ['name', 'address', 'mobile', 'balance', 'email', 'isActive' ];
+    this.data = records.map((item, index) => ({
+      name: `${item.name.first} ${item.name.last}`,
+      address: item.address,
+      mobile: item.phone,
+      balance: item.balance,
+      email: item.email,
+      isActive: item.isActive
+    })
+    );
+  }
 }
