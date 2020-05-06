@@ -1,18 +1,43 @@
 <div class="container">
+  <!-- <div class="row">
+    <form>
+      <div class="form-group form-inline">
+          Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+      </div>
+    </form> -->
+  <!-- </div> -->
   <div class="row">
     <div class="{{tableDiv}}">
       <table id="aspire-data-table" class="{{tableStyle}}">
         <thead class="{{headerStyle}}">
           <tr scope="col" *ngFor="let item of headers; let i = index" [attr.data-index]="i">
-            <th scope="row" [attr.rowspan]="headers.length" [attr.colspan]="0">{{item}}</th>
+            <th scope="row" [attr.rowspan]="getRowSpan()">{{item}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="{{tableRowStyle}}" *ngFor="let item of records; let i = index">
+          <tr class="{{tableRowStyle}}" *ngFor="let item of records | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
             <td class="{{tableDataStyle}}" *ngFor="let header of headers; let i = index">{{item[header]}}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
- </div>
+  <div class="row">
+    <ngb-pagination class="d-flex justify-content-center" aria-label="Default pagination"
+      [(page)]="page" 
+      [pageSize]="pageSize" 
+      [collectionSize]="collectionSize"
+      [ellipses]="ellipses"
+      [maxSize]="maxSize"
+      [directionLinks]="directionLinks"
+      [boundaryLinks]="boundaryLinks"
+    >
+    <ng-template ngbPaginationFirst>First</ng-template>
+    <ng-template ngbPaginationPrevious>Previous</ng-template>
+    <ng-template ngbPaginationEllipsis>...</ng-template>
+    <ng-template ngbPaginationNext>Next</ng-template>
+    <ng-template ngbPaginationLast>Last</ng-template>
+    <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+    </ngb-pagination>
+  </div>
+</div>

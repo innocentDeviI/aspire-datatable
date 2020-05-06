@@ -9,6 +9,9 @@ import { records } from '../../helper/table-record';
 export class DatatableBasicComponent implements OnInit {
   headers: any[] = [];
   data: any[] = [];
+  page: number = 1;
+  recordsLength: number;
+  itemsPerPage: number = 5;
   constructor() { }
 
   ngOnInit(): void {
@@ -26,5 +29,6 @@ export class DatatableBasicComponent implements OnInit {
       isActive: item.isActive
     })
     );
+    this.recordsLength = records.length;
   }
 }
