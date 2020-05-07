@@ -1,4 +1,4 @@
-<lib-aspire-datatable
+<aspire-datatable
  [headers]="headers"
  [records]="data"
  [tableStyle]="'table table-striped table-bordered'"
@@ -6,11 +6,8 @@
  [tableDiv]="''"
  [tableRowStyle]="''"
  [tableDataStyle]="''"
- [page]="page"
- [pageSize]="itemsPerPage"
- [collectionSize]="recordsLength"
- [ellipses]="true"
- [maxSize]="3"
- [directionLinks]="true"
- [boundaryLinks]="true"
-></lib-aspire-datatable>
+ [totalItems]="totalRecords"
+ [maxSize]="5"
+ [itemsPerPage]="itemsPerPage"
+ [pageListStyle]="'pagination justify-content-end'">
+</aspire-datatable>

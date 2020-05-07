@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatatableBasicComponent } from './datatable-basic.component'
-
+import { DatatableBasicComponent } from './datatable-basic.component';
+import { AspireDatatableModule } from 'aspire-datatable';
+import { AspirePaginationModule } from 'aspire-datatable';
 
 @NgModule({
   declarations: [DatatableBasicComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AspireDatatableModule,
+    AspirePaginationModule
   ],
   exports: [DatatableBasicComponent]
 })

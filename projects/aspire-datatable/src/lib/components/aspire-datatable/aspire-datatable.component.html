@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="{{tableRowStyle}}" *ngFor="let item of records | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <tr class="{{tableRowStyle}}" *ngFor='let item of records | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize'>
             <td class="{{tableDataStyle}}" *ngFor="let header of headers; let i = index">{{item[header]}}</td>
           </tr>
         </tbody>
@@ -23,21 +23,14 @@
     </div>
   </div>
   <div class="row">
-    <ngb-pagination class="d-flex justify-content-center" aria-label="Default pagination"
-      [(page)]="page" 
-      [pageSize]="pageSize" 
-      [collectionSize]="collectionSize"
-      [ellipses]="ellipses"
-      [maxSize]="maxSize"
-      [directionLinks]="directionLinks"
-      [boundaryLinks]="boundaryLinks"
-    >
-    <ng-template ngbPaginationFirst>First</ng-template>
-    <ng-template ngbPaginationPrevious>Previous</ng-template>
-    <ng-template ngbPaginationEllipsis>...</ng-template>
-    <ng-template ngbPaginationNext>Next</ng-template>
-    <ng-template ngbPaginationLast>Last</ng-template>
-    <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
-    </ngb-pagination>
+    <div class="col-md-12">
+      <aspire-pagination
+        [totalItems]="totalItems"
+        [itemsPerPage]="itemsPerPage"
+        [maxSize]="5"
+        [pageListStyle]="pageListStyle"
+        (onPageChanged)="onPageChanged($event)">
+      </aspire-pagination>
+    </div>
   </div>
 </div>

@@ -10,6 +10,7 @@ export class DatatableBasicComponent implements OnInit {
   headers: any[] = [];
   data: any[] = [];
   page: number = 1;
+  totalRecords: number;
   recordsLength: number;
   itemsPerPage: number = 5;
   constructor() { }
@@ -29,6 +30,12 @@ export class DatatableBasicComponent implements OnInit {
       isActive: item.isActive
     })
     );
-    this.recordsLength = records.length;
+    this.totalRecords = records.length;
+  }
+
+  onPageChanged(event) {
+    console.log('onpagechanged', event);
+    const fromItemNumber = (this.totalRecords * (event.currentPage - 1) + 1);
+    console.log('fromItemNumber', fromItemNumber);
   }
 }

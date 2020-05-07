@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PageRequest } from '../aspire-datatable/aspire-datatable.model';
+import { Page } from '../aspire-pagination/aspire-pagination.model';
 @Component({
-  selector: 'lib-aspire-datatable',
+  selector: 'aspire-datatable',
   templateUrl: './aspire-datatable.component.html',
   styleUrls: ['./aspire-datatable.component.css']
 })
@@ -13,20 +14,30 @@ export class AspireDatatableComponent implements OnInit {
   @Input() tableDiv: string = 'table-responsive-md';
   @Input() tableRowStyle: string = '';
   @Input() tableDataStyle: string = '';
-  @Input() collectionSize: number;
-  @Input() pageSize: number;
-  @Input() page: number;
-  @Input() ellipses: boolean;
-  @Input() maxSize: number;
-  @Input() directionLinks: boolean;
-  @Input() boundaryLinks: boolean;
-  // @Input() paginationClass: string = 'd-flex justify-content-end';
-  // @Input() ariaLabel: string = 'Default pagination';
+  @Input() totalItems: number = 0;
+  @Input() maxSize: number = 10;
+  @Input() itemsPerPage: number = 10;
+  @Input() pageListStyle: string = '';
+
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
+  public payload = new Page();
+  public pageRequest = new PageRequest();
+  page: number;
+  pageSize: number;
   constructor() { }
 
   ngOnInit(): void {
+    this.page = 1;
+    this.pageSize = this.itemsPerPage;
   }
+
   getRowSpan(){
     return this.headers.length;
+  }
+
+  onPageChanged(event: Page): void {
+    this.page = event.currentPage;
+    this.pageSize = this.itemsPerPage;
   }
 }

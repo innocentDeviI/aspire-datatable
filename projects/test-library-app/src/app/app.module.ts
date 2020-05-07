@@ -3,19 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AspireDatatableModule } from 'aspire-datatable';
-import { DatatableBasicComponent } from './components/datatable-basic/datatable-basic.component';
-
+import { DatatableBasicModule } from './components/datatable-basic/datatable-basic.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DatatableBasicComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AspireDatatableModule
+    DatatableBasicModule
   ],
   providers: [],
   bootstrap: [AppComponent]
