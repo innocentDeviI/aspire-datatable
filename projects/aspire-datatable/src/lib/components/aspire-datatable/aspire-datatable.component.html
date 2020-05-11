@@ -1,11 +1,4 @@
 <div class="container">
-  <!-- <div class="row">
-    <form>
-      <div class="form-group form-inline">
-          Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
-      </div>
-    </form> -->
-  <!-- </div> -->
   <div class="row">
     <div class="{{tableDiv}}">
       <table id="aspire-data-table" class="{{tableStyle}}">
@@ -27,8 +20,13 @@
       <aspire-pagination
         [totalItems]="totalItems"
         [itemsPerPage]="itemsPerPage"
-        [maxSize]="5"
-        [pageListStyle]="pageListStyle"
+        [maxVisiblePage]="maxVisiblePage"
+        [paginationStyle]="paginationStyle"
+        [pageLinkStyle]="pageLinkStyle"
+        [firstPageText]="firstPageText"
+        [prevPageText]="prevPageText"
+        [nextPageText]="nextPageText"
+        [lastPageText]="lastPageText"
         (onPageChanged)="onPageChanged($event)">
       </aspire-pagination>
     </div>

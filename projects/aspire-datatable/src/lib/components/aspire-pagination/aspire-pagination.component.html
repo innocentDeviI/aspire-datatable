@@ -1,25 +1,28 @@
  
-<nav aria-label="Page navigation example">
-    <ul class="{{pageListStyle}}">
-        <li class="{{pageStyle}}" [class.disabled]="disablePagination(1)">
+<nav aria-label="Page navigation example" *ngIf='(totalRecords > 0)'>
+    <ul class="{{paginationStyle}}">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
-                (click)="onFirstPageClick()">{{firstPageText ? firstPageText : 'First'}}</a>
+                (click)="onFirstPageClick()">{{firstPageText ? firstPageText : '&laquo;&laquo;'}}</a>
         </li>
-        <li class="{{pageStyle}}" [class.disabled]="disablePagination(1)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
-                (click)="onPreviousPageClick(pageModel.currentPage - 1)">{{prevPageText ? prevPageText : 'Prev'}}</a>
+                (click)="onPreviousPageClick(pageModel.currentPage - 1)">{{prevPageText ? prevPageText : '&laquo;'}}</a>
         </li>
-        <li class="{{pageStyle}}" *ngFor="let page of pages" [class.disabled]="disablePagination()"
+        <li class="{{pageItemStyle}}" *ngFor="let page of pages" [class.disabled]="disablePagination()"
             [class.active]="pageModel.currentPage === page">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)" (click)="onPageClick(page)">{{page}}</a>
         </li>
-        <li class="{{pageStyle}}" [class.disabled]="disablePagination(2)">
+        <!-- <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)" (click)="cancelEvent($event)" *ngIf='(pageModel.currentPage + maxVisiblePage) < totalPages'>
+            <a class="{{pageLinkStyle}}" href="" >...</a>
+        </li> -->
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
-                (click)="onNextPageClick(pageModel.currentPage + 1)">{{nextPageText ? nextPageText : 'Next' }}</a>
+                (click)="onNextPageClick(pageModel.currentPage + 1)">{{nextPageText ? nextPageText : '&raquo;' }}</a>
         </li>
-        <li class="{{pageStyle}}" [class.disabled]="disablePagination(2)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
-                (click)="onLastPageClick()">{{lastPageText ? lastPageText : 'Last'}}</a>
+                (click)="onLastPageClick()">{{lastPageText ? lastPageText : '&raquo;&raquo;'}}</a>
         </li>
     </ul>
 </nav>

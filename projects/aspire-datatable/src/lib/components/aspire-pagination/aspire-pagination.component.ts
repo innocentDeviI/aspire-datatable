@@ -12,10 +12,10 @@ export class AspirePaginationComponent implements OnInit {
   pages: number[] = [];
   totalPages: number;
 
-  @Input() maxSize: number = 10;
+  @Input() maxVisiblePage: number = 10;
   @Input() disable: boolean = false;
-  @Input() pageListStyle: string = 'pagination justify-content-center';
-  @Input() pageStyle: string = 'page-item';
+  @Input() paginationStyle: string = 'pagination justify-content-center';
+  @Input() pageItemStyle: string = 'page-item';
   @Input() pageLinkStyle: string = 'page-link';
   @Input() firstPageText: string = 'First';
   @Input() prevPageText: string = 'Prev';
@@ -25,7 +25,6 @@ export class AspirePaginationComponent implements OnInit {
   totalRecords: number = 0;
   @Input()
   set totalItems(val: number) {
-    console.log('val', val);
     this.totalRecords = val;
     this.initPagination();
   }
@@ -70,8 +69,6 @@ export class AspirePaginationComponent implements OnInit {
   initPagination(): void {
     this.pages = [];
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-    console.log('this.totalPages', this.totalPages);
-    console.log('this.pages', this.pages);
     this.pageModel = new Page(1, 1, this.validateMaxSize());
     this.setPages();
   }
@@ -142,7 +139,7 @@ export class AspirePaginationComponent implements OnInit {
     let min = this.pageModel.firstPage;
     let max = (this.pageModel.firstPage + this.validateMaxSize()) - 1;
 
-    if (this.pageModel.currentPage <= this.maxSize) {
+    if (this.pageModel.currentPage <= this.maxVisiblePage) {
       min = 1;
       max = this.validateMaxSize();
     }
@@ -179,7 +176,7 @@ export class AspirePaginationComponent implements OnInit {
   }
 
   validateMaxSize(): number {
-    return this.maxSize > this.totalPages ? this.totalPages : this.maxSize;
+    return this.maxVisiblePage > this.totalPages ? this.totalPages : this.maxVisiblePage;
   }
 
   disablePagination(flag: number = 0): boolean {
@@ -188,5 +185,9 @@ export class AspirePaginationComponent implements OnInit {
       case 2: return this.totalItems <= 0 || this.pageModel.currentPage === this.totalPages || this.disable;
       default: return this.disable;
     }
+  }
+
+  cancelEvent(event) {
+    event.preventDefault();
   }
 }

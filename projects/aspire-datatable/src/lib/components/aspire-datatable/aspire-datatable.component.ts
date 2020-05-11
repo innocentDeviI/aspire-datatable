@@ -15,10 +15,16 @@ export class AspireDatatableComponent implements OnInit {
   @Input() tableRowStyle: string = '';
   @Input() tableDataStyle: string = '';
   @Input() totalItems: number = 0;
-  @Input() maxSize: number = 10;
+  @Input() maxVisiblePage: number = 10;
   @Input() itemsPerPage: number = 10;
-  @Input() pageListStyle: string = '';
+  @Input() paginationStyle: string = '';
+  @Input() pageItemStyle: string = 'page-item';
+  @Input() pageLinkStyle: string = 'page-link';
 
+  @Input() firstPageText: any;
+  @Input() prevPageText: any;
+  @Input() nextPageText: any;
+  @Input() lastPageText: any;
   // tslint:disable-next-line:no-output-on-prefix
   @Output() onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
   public payload = new Page();
