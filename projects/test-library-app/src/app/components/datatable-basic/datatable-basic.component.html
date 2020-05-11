@@ -15,6 +15,7 @@
 
 <!-- separate pagination component-->
 <!-- <aspire-pagination
+ [showPagination]="false"
  [totalItems]="16"
  [maxVisiblePage]="3"
  [itemsPerPage]="5"
@@ -34,7 +35,7 @@
     [tableDataStyle]: i.e Table <td> tag styling
   
     aspire-pagination
-
+    [showPagination]: i.e show or hide pagination component
     [ellipsis]:"true"  i.e visible ellipses [...]
     [totalItems]: i.e. Total records of data table for paginate
     [maxVisiblePage]: i.e. The maximum number of pages to display
@@ -46,5 +47,5 @@
     [prevPageText]: i.e. Override classes for prevPageText change | default: <<
     [nextPageText]: i.e. Override classes for nextPageText change | default: >> 
     [lastPageText]: i.e. Override classes for lastPageText change | default: >> >> 
-    
+    [disable]: i.e disable pagination
 -->

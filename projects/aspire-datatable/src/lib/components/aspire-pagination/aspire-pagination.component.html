@@ -1,5 +1,5 @@
 
-<nav aria-label="Page navigation example" *ngIf='(totalRecords > 0)'>
+<nav aria-label="Page navigation example" *ngIf='showPagination'>
     <ul class="{{paginationStyle}}">
         <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
