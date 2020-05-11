@@ -12,15 +12,16 @@ export class AspirePaginationComponent implements OnInit {
   pages: number[] = [];
   totalPages: number;
 
-  @Input() maxVisiblePage: number = 10;
+  @Input() ellipsis: boolean = false;
+  @Input() maxVisiblePage: number = 3;
   @Input() disable: boolean = false;
   @Input() paginationStyle: string = 'pagination justify-content-center';
   @Input() pageItemStyle: string = 'page-item';
   @Input() pageLinkStyle: string = 'page-link';
-  @Input() firstPageText: string = 'First';
-  @Input() prevPageText: string = 'Prev';
-  @Input() nextPageText: string = 'Next';
-  @Input() lastPageText: string = 'Last';
+  @Input() firstPageText: string;
+  @Input() prevPageText: string;
+  @Input() nextPageText: string;
+  @Input() lastPageText: string;
 
   totalRecords: number = 0;
   @Input()
