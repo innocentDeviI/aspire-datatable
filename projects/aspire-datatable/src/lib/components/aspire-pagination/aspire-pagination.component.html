@@ -1,11 +1,11 @@
 
-<nav aria-label="Page navigation example" *ngIf='showPagination'>
+<nav [attr.aria-label]="'ariaLabel'" *ngIf='showPagination'>
     <ul class="{{paginationStyle}}">
-        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)" *ngIf="directionLinks">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
                 (click)="onFirstPageClick()">{{firstPageText ? firstPageText : '&laquo;&laquo;'}}</a>
         </li>
-        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(1)" *ngIf="directionLinks">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
                 (click)="onPreviousPageClick(pageModel.currentPage - 1)">{{prevPageText ? prevPageText : '&laquo;'}}</a>
         </li>
@@ -28,11 +28,11 @@
             *ngIf='ellipsis && (pageModel.currentPage + maxVisiblePage) <= totalPages'>
             <a class="{{pageLinkStyle}}" href="javascript:void(0)">{{totalPages}}</a>
         </li>
-        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)" *ngIf="directionLinks">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
                 (click)="onNextPageClick(pageModel.currentPage + 1)">{{nextPageText ? nextPageText : '&raquo;' }}</a>
         </li>
-        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)">
+        <li class="{{pageItemStyle}}" [class.disabled]="disablePagination(2)" *ngIf="directionLinks">
             <a class="{{pageLinkStyle}}" href="javascript:void(0)"
                 (click)="onLastPageClick()">{{lastPageText ? lastPageText : '&raquo;&raquo;'}}</a>
         </li>

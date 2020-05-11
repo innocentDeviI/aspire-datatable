@@ -13,6 +13,8 @@ export class AspirePaginationComponent implements OnInit {
   totalPages: number;
 
   @Input() showPagination: boolean = true;
+  @Input() directionLinks: boolean = true;
+  @Input() ariaLabel: string = 'Default pagination';
   @Input() ellipsis: boolean = false;
   @Input() maxVisiblePage: number = 3;
   @Input() disable: boolean = false;
