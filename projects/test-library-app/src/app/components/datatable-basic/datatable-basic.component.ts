@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { records } from '../../helper/table-record';
+import { dateFormat } from '../../helper/table-record';
 
 @Component({
   selector: 'app-datatable-basic',
@@ -12,6 +13,8 @@ export class DatatableBasicComponent implements OnInit {
   page: number = 1;
   recordsLength: number;
   itemsPerPage: number = 5;
+  allowSorting: boolean;
+  dateFormat: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,16 +22,29 @@ export class DatatableBasicComponent implements OnInit {
   }
 
   initSampleData = () => {
-    this.headers = ['name', 'address', 'mobile', 'balance', 'email', 'isActive' ];
-    this.data = records.map((item, index) => ({
-      name: `${item.name.first} ${item.name.last}`,
-      address: item.address,
-      mobile: item.phone,
-      balance: item.balance,
-      email: item.email,
-      isActive: item.isActive
-    })
+    this.headers = [
+      {'field':'name','type':'string'},
+      {'field': 'address','type':'string'}, 
+      {'field':'mobile','type':'number'}, 
+      {'field':'balance','type':'number'}, 
+      {'field':'email','type':'string'}, 
+      {'field':'isActive','type':'boolean'},
+      {'field':'date','type':'date'},
+      {'field':'age','type':'number'}
+    ];
+      this.data = records.map((item, index) => ({
+        name: `${item.name.first} ${item.name.last}`,
+        address: item.address,
+        mobile: item.phone,
+        balance: item.balance,
+        email: item.email,
+        isActive: item.isActive,
+        date: item.date,
+        age: item.age
+      })
     );
     this.recordsLength = records.length;
+    this.allowSorting = true;
+    this.dateFormat = dateFormat;
   }
 }

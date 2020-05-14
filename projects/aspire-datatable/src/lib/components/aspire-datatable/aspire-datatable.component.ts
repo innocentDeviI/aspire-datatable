@@ -1,4 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { SortServiceService } from '../../shared/services/sort-service.service';
+import * as moment from 'moment';
+import { dataTypes } from '../../constants/constants';
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'lib-aspire-datatable',
@@ -20,13 +25,60 @@ export class AspireDatatableComponent implements OnInit {
   @Input() maxSize: number;
   @Input() directionLinks: boolean;
   @Input() boundaryLinks: boolean;
+  @Input() allowSorting: boolean;
+  @Input() dateFormat: string;
+  
+  searchForm = this.formBuilder.group({
+    search: [null],
+  });
+
   // @Input() paginationClass: string = 'd-flex justify-content-end';
   // @Input() ariaLabel: string = 'Default pagination';
-  constructor() { }
+  constructor(private sortServiceService: SortServiceService,
+    private formBuilder: FormBuilder,) { }
 
   ngOnInit(): void {
+    this.filterDate();
+    this.checkSearch();
   }
   getRowSpan(){
     return this.headers.length;
+  } 
+
+  sort(item, event){
+    this.records = this.sortServiceService.sorting(item.field,this.records,event,item.type);
   }
+
+  filterDate(){
+    if(this.headers){
+      this.headers.forEach(header => {
+        if(header.type === dataTypes.date){
+          this.records.forEach(element => {
+            var date = moment(new Date(element.date)).format(this.dateFormat)
+            element[header.type] = date
+          });
+        }
+      });
+    }
+  }
+
+  checkSearch(){
+    this.searchForm = this.formBuilder.group({
+      search: [''],
+    }); 
+  }
+
+  search(){
+    var searchItem = this.searchForm.value.search;
+    // console.warn(this.searchForm.value.search)
+    this.records.forEach(record => {
+      this.headers.forEach(header =>{
+        // console.warn(searchItem)
+        if(record[header.field] === searchItem){
+          console.warn(record)
+        }
+      });
+    });
+  }
+
 }
