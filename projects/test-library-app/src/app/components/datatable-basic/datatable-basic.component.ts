@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { records } from '../../helper/table-record';
+import { records, customNoDataMessage } from '../../helper/table-record';
 import { dateFormat } from '../../helper/table-record';
 
 @Component({
@@ -15,6 +15,8 @@ export class DatatableBasicComponent implements OnInit {
   itemsPerPage: number = 5;
   allowSorting: boolean;
   dateFormat: string;
+  allowSearch: boolean;
+  noRecordFoundMessage: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -45,6 +47,8 @@ export class DatatableBasicComponent implements OnInit {
     );
     this.recordsLength = records.length;
     this.allowSorting = true;
+    this.allowSearch = true;
+    this.noRecordFoundMessage = customNoDataMessage;
     this.dateFormat = dateFormat;
   }
 }

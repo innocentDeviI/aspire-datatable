@@ -258,3 +258,5 @@ export const records = [
    ];
    
 export const dateFormat = "YYYY-MM-DD";
+
+export const customNoDataMessage = "No Records Found"
