@@ -9,90 +9,45 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export class AspireSearchingComponent implements OnInit {
   @Input() records: any[] = [];
   @Input() searchingStyle: string = "";
-  @Input() noRecordFoundMessage: string = "";
   @Output() getSearchRecords: EventEmitter<any> = new EventEmitter<any>();
   @Output() getNoDataFoundMessage: EventEmitter<any> = new EventEmitter<any>();
-  
-  constructor() { }
 
-  noDataFoundMessage = 'No Data Found'
-  totalRecords = []
+  noDataFoundMessage: boolean;
+  totalRecords: any = [];
+
+  constructor() {
+    this.noDataFoundMessage = false;
+    this.totalRecords = [];
+  }
 
   ngOnInit() {
     this.totalRecords = this.records;
   }
 
-  filterResult(arr){
-    var filterDuplicateSearch = [];
-    for(var i = 0; i < arr.length; i++){
-        if(filterDuplicateSearch.indexOf(arr[i]) == -1){
-          filterDuplicateSearch.push(arr[i]);
-        }
-    }
-    return filterDuplicateSearch;
-  }
-
-  isSearchClear(event: string){
-    var searchItem = event;
-    var filterRecord = [];
-    if(searchItem === ''){
+  isSearchClear(event: string) {
+    let searchItem: any = event;
+    let filterRecord: any = [];
+    if (searchItem === '') {
       this.records = this.totalRecords;
-      this.noDataFoundMessage = ""
-      this.getSearchRecords.emit(this.records);
-      this.getNoDataFoundMessage.emit(this.noDataFoundMessage);
     }
-    else{
-      if(this.records && this.records.length){
-        if(searchItem.length > 3){
-          this.records.filter(function searchingFilter(element, index, array){
-            Object.values(element).forEach(objectValues=>{
-              if(objectValues.toString().trim().includes(searchItem.trim())){
-                filterRecord.push(index)
-              }
-            })
+    else {
+      if (this.totalRecords.length) {
+        if (searchItem.length > 2) {
+          filterRecord = this.totalRecords.filter(element => {
+            const isAvailable = Object.values(element).some(objectValues =>
+              objectValues.toString().trim().toLowerCase().includes(searchItem.toLowerCase().trim())
+            );
+            if (isAvailable) return element;
           });
-          if(filterRecord && filterRecord.length){
-            var  filnalSearchIndexes= this.filterResult(filterRecord);
-            var filnalSearchElement = [];
-            this.records.forEach((record,index) => {
-              if(filnalSearchIndexes && filnalSearchIndexes.length){
-                filnalSearchIndexes.forEach(id=>{
-                  if(index === id){
-                    filnalSearchElement.push(record);
-                  }
-                });  
-              }
-              else{
-                this.noDataFoundMessage = this.noRecordFoundMessage
-                this.getNoDataFoundMessage.emit(this.noDataFoundMessage);            
-                this.records = []
-              }
-            });
-      
-            if(filnalSearchElement.length){
-              this.records = filnalSearchElement;
-            }
-            else {
-              this.noDataFoundMessage = this.noRecordFoundMessage
-              this.getNoDataFoundMessage.emit(this.noDataFoundMessage);
-              this.records = []
-            }
-          }         
-          else{
-            this.noDataFoundMessage = this.noRecordFoundMessage
-            this.getNoDataFoundMessage.emit(this.noDataFoundMessage);
-            this.records = []
-          }    
+          this.records = filterRecord.length ? [...new Set(filterRecord)] : [];
         }
-        else{
+        else {
           this.records = this.totalRecords;
         }
       }
-      else{
-        this.noDataFoundMessage = this.noRecordFoundMessage
-        this.getNoDataFoundMessage.emit(this.noDataFoundMessage);
-      }
     }
+    this.noDataFoundMessage = this.records.length ? false : true;
+    this.getNoDataFoundMessage.emit(this.noDataFoundMessage);
     this.getSearchRecords.emit(this.records);
   }
 }

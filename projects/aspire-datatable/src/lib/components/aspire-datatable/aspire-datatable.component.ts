@@ -27,11 +27,11 @@ export class AspireDatatableComponent implements OnInit {
   @Input() allowSearch: boolean;
   @Input() dateFormat: string;
   @Input() searchingStyle: string = "";
-  @Input() noRecordFoundMessage: string = "";
+  @Input() noRecordFoundMessage: string = 'No Data Found';
   // searchForm = this.formBuilder.group({
   //   search: [null],
   // });
-  noDataFoundMessage = ''
+  noDataFoundMessage = false;
   // totalRecords = []
   // @Input() paginationClass: string = 'd-flex justify-content-end';
   // @Input() ariaLabel: string = 'Default pagination';
@@ -50,12 +50,12 @@ export class AspireDatatableComponent implements OnInit {
     this.records = this.sortServiceService.sorting(item.field,this.records,event,item.type);
   }
 
-  filterDate(){
+  filterDate() {
     if(this.headers){
       this.headers.forEach(header => {
         if(header.type === dataTypes.date){
           this.records.forEach(element => {
-            var date = moment(new Date(element.date)).format(this.dateFormat)
+            const date = moment(new Date(element.date)).format(this.dateFormat)
             element[header.type] = date
           });
         }
@@ -63,134 +63,11 @@ export class AspireDatatableComponent implements OnInit {
     }
   }
 
-  // checkSearch(){
-  //   this.searchForm = this.formBuilder.group({
-  //     search: [''],
-  //   }); 
-  // }
-
-  // search(){
-  //   var searchItem = this.searchForm.value.search;
-  //   var filterRecord = [];
-  //   if(searchItem === ''){
-  //     console.warn("search is null");
-  //     this.records = this.totalRecords;
-  //   }
-  //   else{
-  //     if(this.records && this.records.length){
-  //       this.records.filter(function searchingFilter(element, index, array){
-  //         Object.values(element).forEach(objectValues=>{
-  //           if(objectValues.toString().includes(searchItem)){
-  //             filterRecord.push(index)
-  //           }
-  //         })
-  //       });
-  //       if(filterRecord && filterRecord.length){
-  //         var  filnalSearchIndexes= this.filterResult(filterRecord);
-  //         var filnalSearchElement = [];
-  //         this.records.forEach((record,index) => {
-  //           if(filnalSearchIndexes && filnalSearchIndexes.length){
-  //             filnalSearchIndexes.forEach(id=>{
-  //               if(index === id){
-  //                 filnalSearchElement.push(record);
-  //               }
-  //             });  
-  //           }
-  //           else{
-  //             console.warn("records inside filnalSearchIndexes No data")
-  //           }
-  //         });
-    
-  //         if(filnalSearchElement.length){
-  //           this.records = filnalSearchElement;
-  //         }
-  //         else {
-  //           this.records = []
-  //           console.warn("error Message")
-  //         }
-  //       }         
-  //       else{
-  //         console.warn("filnalSearchIndexes No data")          
-  //       }    
-
-  //     }
-  //     else{
-  //       console.warn("No Data present")
-  //     }
-  //   }
-
-  // }
-
-  // filterResult(arr){
-  //   var filterDuplicateSearch = [];
-  //   for(var i = 0; i < arr.length; i++){
-  //       if(filterDuplicateSearch.indexOf(arr[i]) == -1){
-  //         filterDuplicateSearch.push(arr[i]);
-  //       }
-  //   }
-  //   return filterDuplicateSearch;
-  // }
-
-  // isSearchClear(event: string){
-  //   var searchItem = event;
-  //   var filterRecord = [];
-  //   if(searchItem === ''){
-  //     this.noDataFoundMessage = ""
-  //     this.records = this.totalRecords;
-  //   }
-  //   else{
-  //     if(this.records && this.records.length){
-  //       this.records.filter(function searchingFilter(element, index, array){
-  //         Object.values(element).forEach(objectValues=>{
-  //           if(objectValues.toString().includes(searchItem)){
-  //             filterRecord.push(index)
-  //           }
-  //         })
-  //       });
-  //       if(filterRecord && filterRecord.length){
-  //         var  filnalSearchIndexes= this.filterResult(filterRecord);
-  //         var filnalSearchElement = [];
-  //         this.records.forEach((record,index) => {
-  //           if(filnalSearchIndexes && filnalSearchIndexes.length){
-  //             filnalSearchIndexes.forEach(id=>{
-  //               if(index === id){
-  //                 filnalSearchElement.push(record);
-  //               }
-  //             });  
-  //           }
-  //           else{
-  //             this.noDataFoundMessage = " No Data Found "
-  //             console.warn("records inside filnalSearchIndexes No data")
-  //           }
-  //         });
-    
-  //         if(filnalSearchElement.length){
-  //           this.records = filnalSearchElement;
-  //         }
-  //         else {
-  //           this.noDataFoundMessage = " No Data Found "            
-  //           console.warn("error Message")
-  //         }
-  //       }         
-  //       else{
-  //         this.noDataFoundMessage = " No Data Found "
-  //         console.warn("filnalSearchIndexes No data")          
-  //       }    
-
-  //     }
-  //     else{
-  //       this.noDataFoundMessage = " No Data Found "
-  //       console.warn("No Data present")
-  //     }
-
-  //   }
-
-  // }
-
-  public getSearchRecords(value): void {
+  public getSearchRecords(value) {
     this.records = value;
   }
-  public getNoDataFoundMessage(value): void {
+
+  public getNoDataFoundMessage(value) {
     this.noDataFoundMessage = value;
   }
 }
