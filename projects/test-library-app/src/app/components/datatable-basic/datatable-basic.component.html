@@ -1,53 +1,16 @@
-<aspire-datatable
- [headers]="tableHeaders"   
- [records]="tableData"
- [tableStyle]="'table table-striped table-bordered'"
- [headerStyle]="''"
- [tableDiv]="''"
- [tableRowStyle]="''"
- [tableDataStyle]="''"
- [totalItems]="totalRecords"
- [maxVisiblePage]="3"
- [itemsPerPage]="itemsPerPage"
- [paginationStyle]="'pagination justify-content-end'"
- >
+<aspire-datatable [headers]="tableHeaders" [records]="tableData" [tableStyle]="'table table-striped table-bordered'"
+    [headerStyle]="''" [tableDiv]="''" [tableRowStyle]="''" [tableDataStyle]="''" [pageSize]="5" [page]="10" [ellipses]="true" [maxSize]="10" [directionLinks]="true" [boundaryLinks]="true" [allowSorting]="true"
+    [allowSearch]="true">
 </aspire-datatable>
 
 <!-- separate pagination component-->
 <aspire-pagination
  [showPagination]="false"
- [totalItems]="16"
+ [totalItems]="totalRecords"
  [maxVisiblePage]="3"
- [itemsPerPage]="5"
+ [itemsPerPage]="itemsPerPage"
  [ellipsis]="true"
  [directionLinks]="true"
  [ariaLabel]="'Default pagination'"
 >
 </aspire-pagination>
-
-<!--
-    aspire-datatable
-
-    [headers]: i.e. Tables headers list |  Type: Array | Ex. ['name','address']
-    [records]: i.e. No of table records | Type: number | Ex. 50
-    [tableStyle]: i.e Table style (override default style) | Type: string | Ex. 'table table-striped table-bordered'
-    [headerStyle]: i.e Table header styling
-    [tableDiv]: i.e Table main div class for styling 
-    [tableRowStyle]: i.e Table <tr> tag styling
-    [tableDataStyle]: i.e Table <td> tag styling
-  
-    aspire-pagination
-    [showPagination]: i.e show or hide pagination component
-    [ellipsis]:"true"  i.e visible ellipses [...]
-    [totalItems]: i.e. Total records of data table for paginate
-    [maxVisiblePage]: i.e. The maximum number of pages to display
-    [itemsPerPage]: i.e.No of Records to display per page
-    [paginationStyle]: i.e. Main pagination element styling [alignment,size]
-    [pageItemStyle]: i.e Pagination list item style for override class
-    [pageLinkStyle]: i.e Pagination link style for override class
-    [firstPageText]: i.e. Override classes for firstPageText change | default: << << 
-    [prevPageText]: i.e. Override classes for prevPageText change | default: <<
-    [nextPageText]: i.e. Override classes for nextPageText change | default: >> 
-    [lastPageText]: i.e. Override classes for lastPageText change | default: >> >> 
-    [disable]: i.e disable pagination
--->

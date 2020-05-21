@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { records } from '../../helper/table-record';
+import { records, customNoDataMessage } from '../../helper/table-record';
+import { dateFormat } from '../../helper/table-record';
 
 @Component({
   selector: 'app-datatable-basic',
@@ -12,6 +13,10 @@ export class DatatableBasicComponent implements OnInit {
   totalRecords: number;
   recordsLength: number;
   itemsPerPage: number = 5;
+  allowSorting: boolean;
+  dateFormat: string;
+  allowSearch: boolean;
+  noRecordFoundMessage: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,17 +24,32 @@ export class DatatableBasicComponent implements OnInit {
   }
 
   initSampleData = () => {
-    this.tableHeaders = ['name', 'address', 'mobile', 'balance', 'email', 'isActive' ];
+    this.tableHeaders = [
+      { 'field': 'name', 'type': 'string' },
+      { 'field': 'address', 'type': 'string' },
+      { 'field': 'mobile', 'type': 'number' },
+      { 'field': 'balance', 'type': 'number' },
+      { 'field': 'email', 'type': 'string' },
+      { 'field': 'isActive', 'type': 'boolean' },
+      { 'field': 'date', 'type': 'date' },
+      { 'field': 'age', 'type': 'number' }
+    ];
     this.tableData = records.map((item, index) => ({
       name: `${item.name.first} ${item.name.last}`,
       address: item.address,
       mobile: item.phone,
       balance: item.balance,
       email: item.email,
-      isActive: item.isActive
+      isActive: item.isActive,
+      date: item.date,
+      age: item.age
     })
     );
-    this.totalRecords = records.length;
+    this.recordsLength = records.length;
+    this.allowSorting = true;
+    this.allowSearch = true;
+    this.noRecordFoundMessage = customNoDataMessage;
+    this.dateFormat = dateFormat;
   }
 
 }

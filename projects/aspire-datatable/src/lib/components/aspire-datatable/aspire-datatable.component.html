@@ -1,34 +1,60 @@
 <div class="container">
+  <div class="row" *ngIf="allowSearch">
+    <div class="col-md-12 searching">
+      <div class="searching">
+        <aspire-searching [records]="records" [searchingStyle]="searchingStyle"
+          (getSearchRecords)="getSearchRecords($event)" (getNoDataFoundMessage)="getNoDataFoundMessage($event)">
+        </aspire-searching>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="{{tableDiv}}">
       <table id="aspire-data-table" class="{{tableStyle}}">
         <thead class="{{headerStyle}}">
-          <tr scope="col" *ngFor="let item of headers; let i = index" [attr.data-index]="i">
-            <th scope="row" [attr.rowspan]="getRowSpan()">{{item}}</th>
+          <tr scope="col" *ngFor="let item of headers let i=index;" [attr.data-index]="i">
+            <th scope="row" [attr.rowspan]="getRowSpan()">
+              <span (click)="sort(item, $event)" *ngIf="allowSorting">
+                <span>{{item.field}} </span>
+                <i class="fa fa-sort-down pl-1 sort-icon" aria-hidden="true"></i>
+              </span>
+              <span *ngIf="!allowSorting">
+                <span>{{item.field}} </span>
+              </span>
+            </th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="{{tableRowStyle}}" *ngFor='let item of records | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize'>
-            <td class="{{tableDataStyle}}" *ngFor="let header of headers; let i = index">{{item[header]}}</td>
+        <tbody *ngIf="noDataFoundMessage === false && records.length !== 0">
+          <tr class="{{tableRowStyle}}"
+            *ngFor="let item of records">
+            <td class="{{tableDataStyle}}" *ngFor="let header of headers  let i = index">
+              {{item[header.field] === null || item[header.field] === undefined || item[header.field] === '' ? '-' : item[header.field]}}
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="noDataFoundMessage === true && records.length === 0">
+          <tr>
+            <td [attr.colspan]="headers.length+1">
+              <div class="col py-3 px-md-5 border text-center">
+                {{noRecordFoundMessage}}
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
-      <aspire-pagination
-        [totalItems]="totalItems"
-        [itemsPerPage]="itemsPerPage"
-        [maxVisiblePage]="maxVisiblePage"
-        [paginationStyle]="paginationStyle"
-        [pageLinkStyle]="pageLinkStyle"
-        [firstPageText]="firstPageText"
-        [prevPageText]="prevPageText"
-        [nextPageText]="nextPageText"
-        [lastPageText]="lastPageText"
-        (onPageChanged)="onPageChanged($event)">
-      </aspire-pagination>
-    </div>
+      <ngb-pagination class="d-flex justify-content-center" aria-label="Default pagination" [(page)]="page"
+      [pageSize]="pageSize" [collectionSize]="collectionSize" [ellipses]="ellipses" [maxSize]="maxSize"
+      [directionLinks]="directionLinks" [boundaryLinks]="boundaryLinks">
+      <ng-template ngbPaginationFirst>First</ng-template>
+      <ng-template ngbPaginationPrevious>Previous</ng-template>
+      <ng-template ngbPaginationEllipsis>...</ng-template>
+      <ng-template ngbPaginationNext>Next</ng-template>
+      <ng-template ngbPaginationLast>Last</ng-template>
+      <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+    </ngb-pagination>
   </div>
 </div>

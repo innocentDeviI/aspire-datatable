@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PageRequest } from '../aspire-datatable/aspire-datatable.model';
-import { Page } from '../aspire-pagination/aspire-pagination.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { SortServiceService } from '../../shared/services/sort-service.service';
+import * as moment from 'moment';
+import { dataTypes } from '../../constants/constants';
+
 @Component({
   selector: 'aspire-datatable',
   templateUrl: './aspire-datatable.component.html',
@@ -14,36 +16,64 @@ export class AspireDatatableComponent implements OnInit {
   @Input() tableDiv: string = 'table-responsive-md';
   @Input() tableRowStyle: string = '';
   @Input() tableDataStyle: string = '';
-  @Input() totalItems: number = 0;
-  @Input() maxVisiblePage: number = 10;
-  @Input() itemsPerPage: number = 10;
-  @Input() paginationStyle: string = '';
-  @Input() pageItemStyle: string = 'page-item';
-  @Input() pageLinkStyle: string = 'page-link';
-
-  @Input() firstPageText: any;
-  @Input() prevPageText: any;
-  @Input() nextPageText: any;
-  @Input() lastPageText: any;
-  // tslint:disable-next-line:no-output-on-prefix
-  @Output() onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
-  public payload = new Page();
-  public pageRequest = new PageRequest();
-  page: number;
-  pageSize: number;
-  constructor() { }
+  @Input() collectionSize: number;
+  @Input() pageSize: number;
+  @Input() page: number;
+  @Input() ellipses: boolean;
+  @Input() maxSize: number;
+  @Input() directionLinks: boolean;
+  @Input() boundaryLinks: boolean;
+  @Input() allowSorting: boolean;
+  @Input() allowSearch: boolean;
+  @Input() dateFormat: string;
+  @Input() searchingStyle: string = "";
+  @Input() noRecordFoundMessage: string = 'No Data Found';
+  // searchForm = this.formBuilder.group({
+  //   search: [null],
+  // });
+  noDataFoundMessage = false;
+  // totalRecords = []
+  // @Input() paginationClass: string = 'd-flex justify-content-end';
+  // @Input() ariaLabel: string = 'Default pagination';
+  constructor(private sortServiceService: SortServiceService) { }
 
   ngOnInit(): void {
-    this.page = 1;
-    this.pageSize = this.itemsPerPage;
+    console.log(this.records)
+    this.filterDate();
+    // this.totalRecords = this.records;
+    // this.checkSearch();
   }
 
   getRowSpan(){
     return this.headers.length;
+  } 
+
+  sort(item, event){
+    this.records = this.sortServiceService.sorting(item.field,this.records,event,item.type);
   }
 
-  onPageChanged(event: Page): void {
+  filterDate() {
+    if(this.headers){
+      this.headers.forEach(header => {
+        if(header.type === dataTypes.date){
+          this.records.forEach(element => {
+            const date = moment(new Date(element.date)).format(this.dateFormat)
+            element[header.type] = date
+          });
+        }
+      });
+    }
+  }
+
+  public getSearchRecords(value) {
+    this.records = value;
+  }
+
+  public getNoDataFoundMessage(value) {
+    this.noDataFoundMessage = value;
+  }
+
+  onPageChanged(event): void {
     this.page = event.currentPage;
-    this.pageSize = this.itemsPerPage;
   }
 }
